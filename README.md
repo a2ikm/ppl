@@ -7,3 +7,9 @@ ppl
 $ go get github.com/PuerkitoBio/goquery
 $ rake
 ```
+
+## Usage
+
+```
+$ ppl <user>
+```

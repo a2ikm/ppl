@@ -2,6 +2,8 @@ package main
 
 import (
   "fmt"
+  "os"
+  "strings"
   "github.com/PuerkitoBio/goquery"
 )
 
@@ -13,7 +15,12 @@ func GetPoem(url string) {
   })
 }
 
+func GetUrl(user string) string {
+  baseUrl := "https://www.pplog.net/u/"
+  return strings.Join([]string{ baseUrl, user }, "")
+}
+
 func main() {
-  url := "https://www.pplog.net/u/ikm"
+  url := GetUrl(os.Args[1])
   GetPoem(url)
 }
