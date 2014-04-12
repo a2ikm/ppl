@@ -5,5 +5,5 @@ ppl
 
 ```
 $ go get github.com/PuerkitoBio/goquery
-$ go build ppl.go
+$ rake
 ```
