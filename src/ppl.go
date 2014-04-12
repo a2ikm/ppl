@@ -7,20 +7,49 @@ import (
   "github.com/PuerkitoBio/goquery"
 )
 
-func GetPoem(url string) {
-  doc, _ := goquery.NewDocument(url)
-  doc.Find(".content h1, .content .content-body").Each(func(_ int, s *goquery.Selection) {
-    text := s.Text()
-    fmt.Println(text)
-  })
+type Poem struct {
+  User  string
+  Title string
+  Body  string
 }
 
-func GetUrl(user string) string {
+func NewPoem(user string) *Poem {
+  p := new(Poem)
+  p.User = user
+  p.Title, p.Body = p.getPoem()
+  return p
+}
+
+func (p *Poem) getUrl() string {
   baseUrl := "https://www.pplog.net/u/"
-  return strings.Join([]string{ baseUrl, user }, "")
+  return strings.Join([]string{ baseUrl, p.User }, "")
+}
+
+func (p *Poem) getTitle(doc *goquery.Document) string {
+  title := ""
+  doc.Find(".content h1").First().Each(func(_ int, s *goquery.Selection) {
+    title = strings.TrimSpace(s.Text())
+  })
+  return title
+}
+
+func (p *Poem) getBody(doc *goquery.Document) string {
+  body := ""
+  doc.Find(".content .content-body").First().Each(func(_ int, s *goquery.Selection) {
+    body = strings.TrimSpace(s.Text())
+  })
+  return body
+}
+
+func (p *Poem) getPoem() (string, string) {
+  doc, _ := goquery.NewDocument(p.getUrl())
+  title  := p.getTitle(doc)
+  body   := p.getBody(doc)
+
+  return title, body
 }
 
 func main() {
-  url := GetUrl(os.Args[1])
-  GetPoem(url)
+  poem := NewPoem(os.Args[1])
+  fmt.Printf("%s\n\n%s", poem.Title, poem.Body)
 }
