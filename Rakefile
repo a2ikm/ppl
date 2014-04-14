@@ -2,7 +2,7 @@
 
 ROOT_DIR = File.dirname(__FILE__)
 
-INSTALL_DIR = ENV["INSTALL_DIR"] || File.join(ROOT_DIR, "bin")
+INSTALL_DIR = ENV["INSTALL_DIR"] || File.join(ROOT_DIR, "build")
 EXECUTABLE  = File.join(INSTALL_DIR, "ppl")
 
 task :default => :build
